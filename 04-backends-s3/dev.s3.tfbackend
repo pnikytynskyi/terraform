@@ -1,0 +1,3 @@
+bucket = "terraform-pavlo.nikytynskyi-bucket"
+key    = "04-backends/dev/state.tfstate"
+region = "eu-central-1"

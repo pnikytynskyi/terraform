@@ -11,6 +11,11 @@ terraform {
       version = "~> 3.0"
     }
   }
+  backend "s3" {
+    bucket = "terraform-pavlo.nikytynskyi-bucket"
+    key    = "04-backends/state.tfstate"
+    region = "eu-central-1"
+  }
 }
 
 provider "aws" {
