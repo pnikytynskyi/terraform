@@ -50,3 +50,60 @@ output "ubuntu_ami_data_eu" {
   value = data.aws_ami.ubuntu_focal_eu.id
 }
 
+data "aws_caller_identity" "current" {}
+
+data "aws_region" "current" {}
+
+output "ubuntu_ami_data" {
+  value = data.aws_ami.ubuntu_focal_eu.id
+}
+
+output "aws_caller_identity" {
+  value = data.aws_caller_identity.current
+}
+
+output "aws_region" {
+  value = data.aws_region.current
+}
+
+data "aws_vpc" "prod_vpc" {
+  tags = {
+    Env = "Prod"
+  }
+}
+
+output "prod_vpc_id" {
+  value = data.aws_vpc.prod_vpc.id
+}
+
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+output "aws_available" {
+  value = data.aws_availability_zones.available.names
+}
+
+
+output "azs" {
+  value = data.aws_availability_zones.available
+}
+
+data "aws_iam_policy_document" "static_website" {
+  statement {
+    sid = "PublicReadGetObject"
+    principals {
+      identifiers = ["*"]
+      type = "*"
+    }
+    actions = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.available.arn}/*"]
+  }
+}
+resource "aws_s3_bucket" "available" {
+  bucket = "my-public-backet"
+}
+
+output "iam_policy" {
+  value = data.aws_iam_policy_document.static_website.json
+}
