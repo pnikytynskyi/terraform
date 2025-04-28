@@ -13,12 +13,16 @@ variable "ec2_instance_type" {
   }
 }
 
-variable "ec2_volume_type" {
-  type        = string
-  description = "The type of volume to attach to the managed EC2 instance gp2 or gp3"
-}
 
-variable "ec2_volume_size" {
-  type        = number
-  description = "The size in GB of the root volume attached to the managed EC2 instance"
+variable "ec2_volume_config" {
+  type = object({
+    size = number
+    type = string
+  })
+  description = "The size(GB) and the type of the root volume attached to the managed EC2 instance. "
+
+  default = {
+    size = 10
+    type = "gp2"
+  }
 }

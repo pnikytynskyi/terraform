@@ -9,12 +9,17 @@ resource "aws_instance" "compute" {
 
   root_block_device {
     delete_on_termination = true
-    volume_type           = var.ec2_volume_type
-    volume_size           = var.ec2_volume_size
+    volume_type = var.ec2_volume_config.type
+    volume_size = var.ec2_volume_config.size
   }
+  
   lifecycle {
     create_before_destroy = true
   }
+
+  tags = merge(var.additional_tags, {
+    ManagedBy = "Terraform"
+  })
 }
 
 data "aws_ami" "ubuntu_focal_eu" {

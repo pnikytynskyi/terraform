@@ -16,3 +16,8 @@ resource "aws_security_group" "public_http_traffic" {
   name        = "public-http-traffic"
   vpc_id      = aws_vpc.dev.id
 }
+
+variable "additional_tags" {
+  type = map(string)
+  default = {}
+}
