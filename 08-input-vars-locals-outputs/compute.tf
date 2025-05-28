@@ -1,3 +1,20 @@
+locals {
+  project       = "08-input-vars-locals-outputs"
+  project_owner = "terraform"
+  cost_center   = "1234"
+  managed_by    = "Terraform"
+}
+
+locals {
+  common_tags = {
+    project       = local.project
+    project_owner = local.project_owner
+    cost_center   = local.cost_center
+    managed_by    = local.managed_by
+    # sensitive_tag = var.my_sensitivity_info
+  }
+}
+
 resource "aws_instance" "compute" {
   # nginx "ami-0e0142bb01c0a1b88"
   # ubuntu "ami-012a41984655c6c83"
@@ -17,9 +34,11 @@ resource "aws_instance" "compute" {
     create_before_destroy = true
   }
 
-  tags = merge(var.additional_tags, {
-    ManagedBy = "Terraform"
-  })
+  tags = merge(var.additional_tags, local.common_tags)
+}
+
+locals {
+  ec2_instance_type = var.ec2_instance_type
 }
 
 data "aws_ami" "ubuntu_focal_eu" {

@@ -5,11 +5,10 @@ variable "aws_region" {
 
 variable "ec2_instance_type" {
   type        = string
-  default     = "t2.micro"
   description = "Managed EC2 instance size"
   validation {
     condition = contains(["t2.micro", "t3.micro"], var.ec2_instance_type)
-    error_message = "The ec2_instance_type must be one of t2.micro, t2.small, t2.medium, t2.large, t2.xlarge, t2.2xlarge."
+    error_message = "The ec2_instance_type must be one of t2.micro or t3.micro"
   }
 }
 
@@ -26,3 +25,8 @@ variable "ec2_volume_config" {
     type = "gp2"
   }
 }
+
+# variable "my_sensitivity_info" {
+#   type      = string
+#   sensitive = true
+# }
