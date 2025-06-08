@@ -1,0 +1,14 @@
+# Brif schema reference
+#  users = {
+# username = string
+# roles = (readonly | admin | developer | auditor)[]
+#
+#}[]
+
+users:
+  - username: john
+    roles: [ readonly, developer ]
+  - username: jane
+    roles: [ admin, auditor ]
+  - username: tom
+    roles: [ readonly ]
